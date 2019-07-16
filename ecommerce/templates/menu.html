@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="/">Просто магазин</a>
+    <img src="./static/logo.svg" alt="" width="42" height="42">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+      aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+          {% for category in category_list %}
+            <li class="nav-item">
+              {% for key, val in  category.items %}
+                {% if val %}
+                  <li class="nav-item active dropdown">
+                    <a class="nav-link dropdown-toggle {{key.visible}}" href="{{ key.get_absolute_url }}" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{key.title}}</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                      {% for i in val %}
+                        <a class="dropdown-item {{i.visible}}" href="{{ i.get_absolute_url }}">{{i.title}}</a>
+                      {% endfor %}
+                    </div>
+                  </li>
+                {% else %}
+                    <a class="nav-link {{key.visible}}"  href="{{ key.get_absolute_url }}">{{key.title}} </a>
+                {% endif %}
+              {% endfor %}
+              </li>
+          {%endfor%}
+
+        <li class="nav-item d-none">
+          <a class="nav-link"  href="./empty_section.html">
+            Аксесcуары</a>
+        </li>
+
+
+      </ul>
+      <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="./cart.html">
+        Корзина</a>
+
+
+      <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="/authentication/login/">
+        Войти</a>
+
+    </div>
+  </nav>
