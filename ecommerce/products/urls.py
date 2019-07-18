@@ -6,6 +6,6 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
-    path('<slug>/', CategoryListView.as_view(), name='category'),
-    path('<category_slug>/<product_slug>/', ProductDetailView.as_view(), name='product'),
+    path('<slug:slug>/', CategoryListView.as_view(), name='category'),
+    path('<slug:category_slug>/<slug:product_slug>/', ProductDetailView.as_view(), name='product'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

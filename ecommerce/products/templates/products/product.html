@@ -11,13 +11,12 @@
         <h2>{{ object.title }}</h2>
 
         <img src="{{ object.image.url }}" width="120">
+        <div>{{ product.price }}</div>
 
         <p>{{ object.description }}</p>
-        <form method="post" action="./cart/">
-          <input type="hidden" name="csrfmiddlewaretoken"
-                 value="N4vcBqzjoYkU7OTDuAT8hq8srpvYX44nJsswuP7e3EYg0Hq8DgxuR0eiXWbSr5RZ">
-          <input type="hidden" name="merchandise_id" value="1">
-          <input type="submit" class="btn btn-secondary" value="Добавить в корзину »">
+        <form method="post" action="{% url 'cart_update'%}">{% csrf_token %}
+          <input type="hidden" name="product_id" value="{{ product.id }}">
+            <input type="submit" class="btn btn-secondary" value="Добавить в корзину »">
         </form>
       </div>
     </div>

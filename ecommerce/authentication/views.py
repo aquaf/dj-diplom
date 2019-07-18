@@ -6,17 +6,6 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import UserLoginForm, UserSignupForm
 
 
-def home(request):
-    context = {'user': 'Гость'}
-    if request.user.is_authenticated:
-        context['user'] = str(request.user)
-    return render(
-        request,
-        'home.html',
-        context
-    )
-
-
 def signup(request):
     template_name = "authentication/signup.html"
     if request.method == 'POST':
