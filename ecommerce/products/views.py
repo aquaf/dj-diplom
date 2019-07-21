@@ -41,11 +41,15 @@ class ProductDetailView(ModelFormMixin, DetailView):
         product = self.get_object()
         form = self.get_form()
         if form.is_valid():
-            new_comment = form.save(commit=False)
-            new_comment.product = product
-            new_comment.author = request.user
-            new_comment.save()
-            return redirect(product)
+                new_comment = form.save(commit=False)
+                new_comment.product = product
+                if request.user.is_authenticated:
+                    new_comment.author = request.user
+                    new_comment.save()
+                else:
+                    new_comment.author = None
+                    new_comment.save()
+                return redirect(product)
             
     def get_object(self):
         product_slug = self.kwargs.get('product_slug')

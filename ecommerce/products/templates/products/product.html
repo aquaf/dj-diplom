@@ -30,7 +30,11 @@
     <hr>
     {% for comment in comments%}
       {{comment.stars|convert_stars}}
-      <span>{{comment.author}}</span>
+      {% if comment.author%}
+        <span>{{comment.author}}</span>
+      {% else %}
+      <span>Anonymus</span>
+      {% endif %}
       <p>{{comment.text}}</p>
     {% endfor %}
     <hr>
