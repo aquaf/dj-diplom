@@ -11,7 +11,7 @@ from .forms import ReviewForm
 
 class CategoryListView(ListView):
     template_name = "products/category.html"
-    paginate_by = 2
+    paginate_by = 1
 
     def get_queryset(self):
         self.category = get_object_or_404(Category, slug=self.kwargs['slug'])

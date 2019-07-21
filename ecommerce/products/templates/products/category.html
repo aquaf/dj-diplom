@@ -24,28 +24,36 @@
           <form method="post" action="{% url 'cart_update'%}">{% csrf_token %}
               <input type="hidden" name="product_id" value="{{ product.id }}">
               {% if product in cart.products.all %}
-                <input type="" class="btn btn-secondary" value="Уже в корзине">
+              <input type="button" class="btn btn-secondary" value="Уже в корзине">
               {% else %}
                 <input type="submit" class="btn btn-secondary" value="Добавить в корзину »">
               {% endif %}
             </form>
         </div>
         {% endfor %}
-        <div class="container">
-          {% if is_paginated %}
-          <div class="pagination">
-              <span class="page-links">
-                {% if page_obj.has_previous %}
-                    <a href="{{category.get_absolute_url}}?page={{ page_obj.previous_page_number }}">Назад</a>
-                {% endif %}
-                  <span class="page-current">Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.</span>
-                {% if page_obj.has_next %}
-                    <a href="{{category.get_absolute_url}}?page={{ page_obj.next_page_number }}">дальше</a>
-                {% endif %}
-              </span>
-          </div>
+        {% if is_paginated %}
+        <nav class="container">
+        <ul class="pagination justify-content-left">
+          {% if page_obj.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+          {% else %}
+          <li class="page-item disabled"><a class="page-link" href="#"><span>&laquo;</span></a></li>
           {% endif %}
-        </div>
+          {% for i in paginator.page_range %}
+          {% if page_obj.number == i %}
+          <li class="page-item active"><a class="page-link" href="#">{{ i }} <span class="sr-only">(current)</span></a></li>
+          {% else %}
+          <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+          {% endif %}
+          {% endfor %}
+          {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+          {% else %}
+          <li class="page-item disabled"><a class="page-link" href="#"><span>&raquo;</span></a></li>
+          {% endif %}
+        </ul>
+        </nav>
+        {% endif %}
 
       </div>
 
