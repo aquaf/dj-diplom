@@ -10,14 +10,18 @@
       <div class="col-md-12">
         <h2>{{ object.title }}</h2>
 
-        <img src="{{ object.image.url }}" width="120">
+        {% if product.image %}
+          <img src="{{ product.image.url }}" width="120">
+        {% else %}
+          картинки нет
+        {% endif %}
         <div>Цена: {{ object.price }}</div>
         <div>
           Описание:
           <p>{{ object.description }}</p>
         </div>
         <form method="post" action="{% url 'cart_update'%}">{% csrf_token %}
-          <input type="hidden" name="product_id" value="{{ object.id }}">
+          <input type="hidden" name="product_id" value="{{ product.id }}">
           {% if object in cart.products.all %}
           <input type="button" class="btn btn-secondary" value="Уже в корзине">
           {% else %}

@@ -15,9 +15,11 @@
           <h2>{{product.title}}</h2>
 
           <a href="{{ product.get_absolute_url }}">
-
+            {% if product.image %}
             <img src="{{ product.image.url }}" width="180">
-
+            {% else %}
+            картинки нет
+            {% endif %}
           </a>
           <div>{{ product.price }}</div>
 

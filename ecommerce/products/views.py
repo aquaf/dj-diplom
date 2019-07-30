@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView, DetailView, TemplateView, FormView
+from django.views.generic import ListView, DetailView, TemplateView, FormView, View
 from django.views.generic.edit import ModelFormMixin
-from .models import Product, Category, Review
+from .models import Product, Category, Review, Blog
 from django.http import Http404
 from cart.models import Cart
 from .forms import ReviewForm
@@ -11,7 +11,7 @@ from .forms import ReviewForm
 
 class CategoryListView(ListView):
     template_name = "products/category.html"
-    paginate_by = 1
+    paginate_by = 4
 
     def get_queryset(self):
         self.category = get_object_or_404(Category, slug=self.kwargs['slug'])
@@ -55,5 +55,10 @@ class ProductDetailView(ModelFormMixin, DetailView):
         product_slug = self.kwargs.get('product_slug')
         return get_object_or_404(Product, slug=product_slug)
 
-class HomeView(TemplateView):
-    template_name = "products/index.html"
+class HomeView(View):
+
+    def get(self, request, *args, **kwargs):
+        template_name = "products/index.html"
+        posts = Blog.objects.filter(main_page=True)
+        cart_obj = Cart.objects.new_or_get(request)
+        return render(request, template_name, context = {'posts': posts, 'cart': cart_obj})
