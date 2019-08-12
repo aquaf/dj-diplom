@@ -19,8 +19,8 @@ class Category(models.Model):
 
     class Meta:
         unique_together = ('slug', 'parent',) 
-        verbose_name = 'Категория'
-        verbose_name_plural = 'Категории'
+        verbose_name = 'Редактирование разделов'
+        verbose_name_plural = 'Редактирование разделов'
 
     def __str__(self):
         return self.title
@@ -38,8 +38,8 @@ class Product(models.Model):
     category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='category', verbose_name='Категория')
 
     class Meta:
-        verbose_name = 'Товар'
-        verbose_name_plural = 'Товары'
+        verbose_name = 'Редактирование товаров'
+        verbose_name_plural = 'Редактирование товаров'
 
     def __str__(self):
         return self.title
@@ -83,5 +83,5 @@ class Blog(models.Model):
         return f'{self.pk}'
 
     class Meta:
-        verbose_name = 'Блог'
-        verbose_name_plural = 'Блоги'
+        verbose_name = 'Редактирование статей на главной странице и привязывание к ним товаров, которые должны отображаться после нее.'
+        verbose_name_plural = 'Редактирование статей на главной странице и привязывание к ним товаров, которые должны отображаться после нее.'

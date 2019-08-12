@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Cart
+from .models import Cart, Order
 from products.models import Product
 # Create your views here.
 
@@ -26,8 +26,12 @@ def cart_update(request):
 def cart_success(request):
     template = 'cart/success.html'
 
-    if request.POST.get('success') == 'paid':
+    if request.POST.get('success'):
+        user = request.user
         cart_obj = Cart.objects.new_or_get(request)
         cart_obj.purchased = True
+        order = Order.objects.create(user=user, total=cart_obj.total)
+        for product in cart_obj.products.all():
+            order.products.add(product)
         cart_obj.save()
         return render(request, template, {'user': request.user})

@@ -12,11 +12,6 @@ class ProductAdmin(admin.ModelAdmin):
     fields = ('image', 'title', 'description', 'price', 'slug', 'category',)
     list_display = ('title', 'price','category', 'slug',)
 
-@admin.register(Review)
-class ReviewAdmin(admin.ModelAdmin):
-    fields = ('product', 'author', 'text', 'stars', )
-    list_display = ('product', 'author')
-
 @admin.register(Blog)
 class BlogAdmin(admin.ModelAdmin):
     fields = ('text', 'product', 'main_page',)

@@ -16,7 +16,7 @@
       <div class="row">
         {% for product in post.product.all %}
         <div class="col-md-4">
-          <h2>Nexus 5x</h2>
+          <h2>{{ product.title }}</h2>
   
           <a href="{{ product.get_absolute_url }}">
   

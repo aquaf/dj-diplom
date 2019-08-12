@@ -1,3 +1,6 @@
 {
-    "python.pythonPath": "/home/aqua/python-projects/dj-diplom/env/bin/python"
+    "python.pythonPath": "C:\\Users\\AQua\\AppData\\Local\\Programs\\Python\\Python37\\python.exe",
+    "python.linting.flake8Enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.enabled": true
 }

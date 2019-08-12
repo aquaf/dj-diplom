@@ -13,13 +13,13 @@ class CartManager(models.Manager):
             if user.is_authenticated:
                 user_obj = user
         return self.model.objects.create(user=user_obj)
-    
+
     def new_or_get(self, request):
         cart_id = request.session.get('cart_id', None)
         qs = self.get_queryset().filter(id=cart_id)
-        if qs.count() == 1:
-            cart_obj=qs.first()
-            if cart_obj.purchased == True:
+        cart_obj = self.get_queryset().filter(id=cart_id).first()
+        if cart_obj:
+            if cart_obj.purchased:
                 cart_obj = Cart.objects.new(user=request.user)
                 request.session['cart_id'] = cart_obj.id
             if request.user.is_authenticated and cart_obj.user is None:
@@ -38,11 +38,15 @@ class Cart(models.Model):
     total = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    
+
     objects = CartManager()
 
     def __str__(self):
         return str(self.id)
+
+    class Meta:
+        verbose_name = 'Корзина'
+        verbose_name_plural = 'Корзины'
 
 
 def m2m_changed_cart_reciever(sender, instance, action, *args, **kwargs):
@@ -54,5 +58,22 @@ def m2m_changed_cart_reciever(sender, instance, action, *args, **kwargs):
         instance.total = total
         instance.save()
 
+
 m2m_changed.connect(m2m_changed_cart_reciever, sender=Cart.products.through)
 
+
+class Order(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Покупатель', null=True)
+    timestamp = models.DateTimeField(verbose_name='Время заказа', auto_now_add=True)
+    total = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
+    products = models.ManyToManyField(Product, verbose_name='Товар', null=True)
+
+    class Meta:
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
+
+    def __str__(self):
+        return f'Заказ №{self.id} от {self.timestamp.date()}'
+
+    def order_num(self):
+        return f'Заказ №{self.id}'
