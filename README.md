@@ -2,5 +2,5 @@
 2. python manage.py migrate
 3. python manage.py loaddata fixtures.json
 
-login - test
+login - test@test.ru
 pass - test
