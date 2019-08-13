@@ -66,7 +66,7 @@ class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Покупатель', null=True)
     timestamp = models.DateTimeField(verbose_name='Время заказа', auto_now_add=True)
     total = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
-    products = models.ManyToManyField(Product, verbose_name='Товар', null=True)
+    products = models.ManyToManyField(Product, verbose_name='Товар')
 
     class Meta:
         verbose_name = 'Заказ'

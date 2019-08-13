@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block body %}
+
+<body class="text-center" data-gr-c-s-loaded="true">
+    
+{% endblock %}
+
+{% block content %}
+
+<form class="form-signin" method='post'>
+  <img class="mb-4" src="{% static 'img/logo.svg' %}" alt="" width="72" height="72">
+  <h1 class="h3 mb-3 font-weight-normal">Вход</h1>
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-lg btn-primary" type="submit">Войти</button>
+  <a href="/authentication/signup/">Зарегестрироваться</a>
+</form>
+
+{% endblock %}
+

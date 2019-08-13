@@ -31,7 +31,6 @@ def cart_success(request):
         cart_obj = Cart.objects.new_or_get(request)
         cart_obj.purchased = True
         order = Order.objects.create(user=user, total=cart_obj.total)
-        for product in cart_obj.products.all():
-            order.products.add(product)
+        order.products.add(*cart_obj.products.all())
         cart_obj.save()
         return render(request, template, {'user': request.user})
